@@ -16,9 +16,9 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    query: {
+    queryId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Websites",
+      ref: "Query",
     },
     profilePicture: {
       type: String,
