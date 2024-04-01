@@ -1,0 +1,1 @@
+İlk commitimde ne işin var çaqqal
