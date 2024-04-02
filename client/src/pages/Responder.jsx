@@ -3,6 +3,8 @@ import { IoMdBook } from "react-icons/io";
 import { MdOutlineDelete } from "react-icons/md";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { FaRegCopy } from "react-icons/fa";
+
 
 const Responder = () => {
   const [queries, setQueries] = useState([
@@ -18,7 +20,8 @@ const Responder = () => {
   // State to manage sidebar open/close
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [showFirstDiv, setShowFirstDiv] = useState(true);
-  const [copiedText, setCopiedText] = useState("");
+
+
 
   // Function to toggle sidebar
   const toggleSidebar = () => {
@@ -65,16 +68,8 @@ const Responder = () => {
     setShorthandResponse("");
   };
 
-  //Kopya almak için fonksiyon
-   const copyToClipboard = (text) => {
-     navigator.clipboard.writeText(text).then(() => {
-       setCopiedText(text);
-       setTimeout(() => {
-         setCopiedText("");
-       }, 2000); // Reset copied text after 2 seconds
-     });
-   };
-
+  
+   
   return (
     <div className="flex min-h-screen bg-black text-gray-100">
       <ToastContainer />
@@ -178,20 +173,41 @@ const Responder = () => {
             </div>
           ) : (
             //arama sonrası div
-            <div className="text-center">
-              <div>
-                <img src="user.jpg" alt="" />
-                <h4>Yazılan email</h4>
-                <p>Gelen email işte şöyle yazılmış filan</p>
-                <h4>Nasıl bir şekilde yazacağın kısım</h4>
-                <p>Tatlı bir dille uyar vb</p>
+            <div className="bg-black text-white ">
+              <div className="py-4">
+ 
+                <img
+                  src="https://media.istockphoto.com/id/1300845620/tr/vekt%C3%B6r/kullan%C4%B1c%C4%B1-simgesi-d%C3%BCz-beyaz-arka-plan-%C3%BCzerinde-izole-kullan%C4%B1c%C4%B1-sembol%C3%BC-vekt%C3%B6r-ill%C3%BCstrasyonu.jpg?s=612x612&w=0&k=20&c=BapxTLg8R3jjWnvaSXeHqgtou_-FcyBKmAkUsgwQzxU="
+                  alt=""
+                  className="mx-auto h-10 w-10"
+                />
+                <h4 className="mt-2 text-center">Yazılan email</h4>
+                <div className="p-4 bg-gray-800 mx-auto my-2 rounded-lg max-w-md">
+                  <p>Gelen email işte şöyle yazılmış filan</p>
+                </div>
+
+                <h4 className="mt-10 text-center">
+                  Nasıl bir şekilde yazacağın kısım
+                </h4>
+                <div className="p-4 bg-gray-800 mx-auto my-2 rounded-lg max-w-md">
+                  <p>Tatlı bir dille uyar vb</p>
+                </div>
               </div>
-              <div>
-                <img src="ai.jpg" alt="" />
-                <p>Çıktı olarak alınan mail</p>
-                <p>
-                  Gayet güzel falan çok iyi bir çıktı alındı göstermleik yazı
-                </p>
+              <hr />
+              <div className="py-4 mt-10">
+                <img
+                  src="https://media.istockphoto.com/id/1452604857/tr/foto%C4%9Fraf/businessman-touching-the-brain-working-of-artificial-intelligence-automation-predictive.jpg?s=612x612&w=0&k=20&c=WTKgDne7V_AuiC5JjaUF-50fABjpvIU_bKo9EmhD7rM="
+                  alt=""
+                  className="mx-auto h-14 w-14"
+                />
+                <h4 className="mt-10 text-center">
+                  Çıktı olarak alınan mail
+                </h4>
+                <div className="p-4 bg-gray-800 mx-auto my-2 rounded-lg max-w-md">
+                  <p>
+                    Gayet güzel falan çok iyi bir çıktı alındı göstermleik yazı
+                  </p>
+                </div>
               </div>
             </div>
           )}
