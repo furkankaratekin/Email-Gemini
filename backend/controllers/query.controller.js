@@ -50,7 +50,28 @@ export const addQuery = async (req, res, next) => {
 };
 
 
-//SorguID'ye göre ID'yi getir
+//SorguID'ye göre sorguları getir
+export const getQueryById = async (req,res) => {
+  try {
+    //URL'den gelen ID parametresini al
+    const { id } = req.params;
+
+    //Doğrudan _id değerini kullanarak tarifi bul
+    const query = await Query.findOne({ _id: id });
+
+    if (!query) {
+      return res.status(404).json({ message: "Sorgu Bulunamadı" });
+    }
+
+    // Tarif bulunursa, tarifi JSON formatında döndür
+    res.json(query);
+  } catch (error) {
+    // Hata oluşursa, 500 hatası ile hata mesajını döndür
+    res.status(500).json({ message: error.message });
+  }
+}
+
+
 
 //KullanıcıID'ye göre sorguları getir.
 export const getQueryByUserId = async (req,res) => {
