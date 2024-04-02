@@ -5,7 +5,6 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { FaRegCopy } from "react-icons/fa";
 
-
 const Responder = () => {
   const [queries, setQueries] = useState([
     "Query 1",
@@ -20,8 +19,10 @@ const Responder = () => {
   // State to manage sidebar open/close
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [showFirstDiv, setShowFirstDiv] = useState(true);
-
-
+  const [submittedResponses, setSubmittedResponses] = useState({
+    emailContent: "",
+    shorthandResponse: "",
+  });
 
   // Function to toggle sidebar
   const toggleSidebar = () => {
@@ -58,18 +59,27 @@ const Responder = () => {
       });
       return; // Exit the submit handler if any field is empty
     }
-    console.log("Email Content:", emailContent);
-    console.log("Shorthand Response:", shorthandResponse);
-    // Add any additional actions you want to take after form submission here
-    setShowFirstDiv(!showFirstDiv); // Gösterilen div'i değiştir
+    /*  console.log("Email Content:", emailContent);
+    console.log("Shorthand Response:", shorthandResponse); */
 
+    // Add any additional actions you want to take after form submission here
+    setSubmittedResponses({ emailContent, shorthandResponse });
+    setShowFirstDiv(!showFirstDiv); // Gösterilen div'i değiştir
     // Clear the form fields after submission
     setEmailContent("");
     setShorthandResponse("");
   };
 
+
+
+  /* ---------AXIOS İLE İLGİLİ İŞLEMLER---------------------------------------------------------- */
+
+
+
+
+
+
   
-   
   return (
     <div className="flex min-h-screen bg-black text-gray-100">
       <ToastContainer />
@@ -175,7 +185,6 @@ const Responder = () => {
             //arama sonrası div
             <div className="bg-black text-white ">
               <div className="py-4">
- 
                 <img
                   src="https://media.istockphoto.com/id/1300845620/tr/vekt%C3%B6r/kullan%C4%B1c%C4%B1-simgesi-d%C3%BCz-beyaz-arka-plan-%C3%BCzerinde-izole-kullan%C4%B1c%C4%B1-sembol%C3%BC-vekt%C3%B6r-ill%C3%BCstrasyonu.jpg?s=612x612&w=0&k=20&c=BapxTLg8R3jjWnvaSXeHqgtou_-FcyBKmAkUsgwQzxU="
                   alt=""
@@ -183,14 +192,14 @@ const Responder = () => {
                 />
                 <h4 className="mt-2 text-center">Yazılan email</h4>
                 <div className="p-4 bg-gray-800 mx-auto my-2 rounded-lg max-w-md">
-                  <p>Gelen email işte şöyle yazılmış filan</p>
+                  <p>{submittedResponses.emailContent}</p>
                 </div>
 
                 <h4 className="mt-10 text-center">
                   Nasıl bir şekilde yazacağın kısım
                 </h4>
                 <div className="p-4 bg-gray-800 mx-auto my-2 rounded-lg max-w-md">
-                  <p>Tatlı bir dille uyar vb</p>
+                  <p>{submittedResponses.shorthandResponse}</p>
                 </div>
               </div>
               <hr />
@@ -200,9 +209,7 @@ const Responder = () => {
                   alt=""
                   className="mx-auto h-14 w-14"
                 />
-                <h4 className="mt-10 text-center">
-                  Çıktı olarak alınan mail
-                </h4>
+                <h4 className="mt-10 text-center">Çıktı olarak alınan mail</h4>
                 <div className="p-4 bg-gray-800 mx-auto my-2 rounded-lg max-w-md">
                   <p>
                     Gayet güzel falan çok iyi bir çıktı alındı göstermleik yazı
