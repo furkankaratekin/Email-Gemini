@@ -17,6 +17,8 @@ const Responder = () => {
 
   // State to manage sidebar open/close
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [showFirstDiv, setShowFirstDiv] = useState(true);
+  const [copiedText, setCopiedText] = useState("");
 
   // Function to toggle sidebar
   const toggleSidebar = () => {
@@ -38,29 +40,40 @@ const Responder = () => {
   };
 
   // Function to handle form submission
-const handleSubmit = (e) => {
-  e.preventDefault(); // Prevent default form submission behavior
-  // Check if either input is empty and show an error toast if so
-  if (!emailContent.trim() || !shorthandResponse.trim()) {
-    toast.error("Lütfen tüm alanları doldurun.", {
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
-    return; // Exit the submit handler if any field is empty
-  }
-  console.log("Email Content:", emailContent);
-  console.log("Shorthand Response:", shorthandResponse);
-  // Add any additional actions you want to take after form submission here
-  
-  // Clear the form fields after submission
-  setEmailContent("");
-  setShorthandResponse("");
-};
+  const handleSubmit = (e) => {
+    e.preventDefault(); // Prevent default form submission behavior
+    // Check if either input is empty and show an error toast if so
+    if (!emailContent.trim() || !shorthandResponse.trim()) {
+      toast.error("Lütfen tüm alanları doldurun.", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      return; // Exit the submit handler if any field is empty
+    }
+    console.log("Email Content:", emailContent);
+    console.log("Shorthand Response:", shorthandResponse);
+    // Add any additional actions you want to take after form submission here
+    setShowFirstDiv(!showFirstDiv); // Gösterilen div'i değiştir
+
+    // Clear the form fields after submission
+    setEmailContent("");
+    setShorthandResponse("");
+  };
+
+  //Kopya almak için fonksiyon
+   const copyToClipboard = (text) => {
+     navigator.clipboard.writeText(text).then(() => {
+       setCopiedText(text);
+       setTimeout(() => {
+         setCopiedText("");
+       }, 2000); // Reset copied text after 2 seconds
+     });
+   };
 
   return (
     <div className="flex min-h-screen bg-black text-gray-100">
@@ -102,61 +115,88 @@ const handleSubmit = (e) => {
         />
 
         {/* Ana içerik */}
-        <div className="p-10 mt-14">
-          {/* Email Yanıtlayıcı Formu */}
-          <form
-            onSubmit={handleSubmit}
-            className="space-y-4 w-full max-w-4xl mx-auto"
-          >
-            <h3 className="text-3xl mb-12">Email Cevaplayıcı</h3>
-            <p className="text-lg mb-2">
-              Yapay zeka ile kolayca e-maillerini cevapla
-            </p>
-            <div>
-              <label
-                htmlFor="emailContent"
-                className="block text-sm font-medium text-gray-200"
+        {/* Burada 2 tane div olacak ve bu divler değişkenlik gösterecek */}
+        <div>
+          {" "}
+          {showFirstDiv ? (
+            //arama öncesi div
+            <div className="p-10 mt-14">
+              {/* Email Yanıtlayıcı Formu */}
+              <form
+                onSubmit={handleSubmit}
+                className="space-y-4 w-full max-w-4xl mx-auto"
               >
-                Email to Respond To
-              </label>
-              <textarea
-                id="emailContent"
-                rows="6"
-                className="mt-1 block w-full border border-gray-800 rounded-lg shadow-sm bg-gray-800 text-white focus:ring-blue-500 focus:border-blue-500"
-                placeholder="Paste the email you want to respond to"
-                value={emailContent}
-                onChange={(e) => setEmailContent(e.target.value)}
-              />
+                <h3 className="text-3xl mb-12">Email Cevaplayıcı</h3>
+                <p className="text-lg mb-2">
+                  Yapay zeka ile kolayca e-maillerini cevapla
+                </p>
+                <div>
+                  <label
+                    htmlFor="emailContent"
+                    className="block text-sm font-medium text-gray-200"
+                  >
+                    Email to Respond To
+                  </label>
+                  <textarea
+                    id="emailContent"
+                    rows="6"
+                    className="mt-1 block w-full border border-gray-800 rounded-lg shadow-sm bg-gray-800 text-white focus:ring-blue-500 focus:border-blue-500"
+                    placeholder="Paste the email you want to respond to"
+                    value={emailContent}
+                    onChange={(e) => setEmailContent(e.target.value)}
+                  />
+                </div>
+                <div>
+                  <label
+                    htmlFor="shorthandResponse"
+                    className="block text-sm font-medium text-gray-200"
+                  >
+                    Shorthand Response
+                  </label>
+                  <textarea
+                    id="shorthandResponse"
+                    rows="4" // Bu değeri artırarak başlangıçta daha fazla satır gösterilmesini sağladık
+                    className="mt-1 block w-full border border-gray-700 rounded-lg shadow-sm bg-gray-800 text-white focus:ring-blue-500 focus:border-blue-500"
+                    placeholder="Thanks!"
+                    value={shorthandResponse}
+                    onChange={(e) => setShorthandResponse(e.target.value)}
+                    onKeyPress={(e) => {
+                      if (e.key === "Enter" && !e.shiftKey) {
+                        e.preventDefault(); // Varsayılan işlemi engelle
+                        handleSubmit(e); // Gönderme işleyicisini çağır
+                      }
+                    }}
+                  />
+                </div>
+                <button
+                  type="submit"
+                  className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+                >
+                  Submit
+                </button>
+              </form>
             </div>
-            <div>
-              <label
-                htmlFor="shorthandResponse"
-                className="block text-sm font-medium text-gray-200"
-              >
-                Shorthand Response
-              </label>
-              <textarea
-                id="shorthandResponse"
-                rows="4" // Bu değeri artırarak başlangıçta daha fazla satır gösterilmesini sağladık
-                className="mt-1 block w-full border border-gray-700 rounded-lg shadow-sm bg-gray-800 text-white focus:ring-blue-500 focus:border-blue-500"
-                placeholder="Thanks!"
-                value={shorthandResponse}
-                onChange={(e) => setShorthandResponse(e.target.value)}
-                onKeyPress={(e) => {
-                  if (e.key === "Enter" && !e.shiftKey) {
-                    e.preventDefault(); // Varsayılan işlemi engelle
-                    handleSubmit(e); // Gönderme işleyicisini çağır
-                  }
-                }}
-              />
+          ) : (
+            //arama sonrası div
+            <div className="text-center">
+              <div>
+                <img src="user.jpg" alt="" />
+                <h4>Yazılan email</h4>
+                <p>Gelen email işte şöyle yazılmış filan</p>
+                <h4>Nasıl bir şekilde yazacağın kısım</h4>
+                <p>Tatlı bir dille uyar vb</p>
+              </div>
+              <div>
+                <img src="ai.jpg" alt="" />
+                <p>Çıktı olarak alınan mail</p>
+                <p>
+                  Gayet güzel falan çok iyi bir çıktı alındı göstermleik yazı
+                </p>
+              </div>
             </div>
-            <button
-              type="submit"
-              className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
-            >
-              Submit
-            </button>
-          </form>
+          )}
+          {/*           <button onClick={toggleDiv}>Değiştir </button>
+           */}
         </div>
       </div>
     </div>
