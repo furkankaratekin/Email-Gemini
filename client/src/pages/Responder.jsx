@@ -116,6 +116,9 @@ const Responder = () => {
 
   //sorguları listeleme kısmı
 
+
+  
+
   //önceki sorguları gösteren kısım
 
 
