@@ -3,7 +3,13 @@ import { IoMdBook } from "react-icons/io";
 import { MdOutlineDelete } from "react-icons/md";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { FaRegCopy } from "react-icons/fa";
+import axios from "axios";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+
+
+
+
 
 const Responder = () => {
   const [queries, setQueries] = useState([
@@ -15,7 +21,6 @@ const Responder = () => {
   ]);
   const [emailContent, setEmailContent] = useState(""); // State for email content
   const [shorthandResponse, setShorthandResponse] = useState(""); // State for shorthand response
-
   // State to manage sidebar open/close
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [showFirstDiv, setShowFirstDiv] = useState(true);
@@ -23,6 +28,10 @@ const Responder = () => {
     emailContent: "",
     shorthandResponse: "",
   });
+  const { currentUser } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+  const token = currentUser.token;
+  const [generatedContent, setGeneratedContent] = useState(""); // State for generated content
 
   // Function to toggle sidebar
   const toggleSidebar = () => {
@@ -44,7 +53,9 @@ const Responder = () => {
   };
 
   // Function to handle form submission
-  const handleSubmit = (e) => {
+
+  /* ---------AXIOS İLE İLGİLİ İŞLEMLER---------------------------------------------------------- */
+  const handleSubmit = async (e) => {
     e.preventDefault(); // Prevent default form submission behavior
     // Check if either input is empty and show an error toast if so
     if (!emailContent.trim() || !shorthandResponse.trim()) {
@@ -68,18 +79,33 @@ const Responder = () => {
     // Clear the form fields after submission
     setEmailContent("");
     setShorthandResponse("");
+
+    const bodyParameters = {
+      firstprompt: submittedResponses.emailContent,
+      secondprompt: submittedResponses.shorthandResponse,
+    };
+    const config = {
+      headers: { Authorization: `Bearer ${token}` },
+    };
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/api/query/add",
+        bodyParameters,
+        config
+      );
+      console.log("Generated Content:", response.data.generatedContent);
+      setGeneratedContent(response.data.generatedContent); // Save the generated content to state
+      toast.success("Sorgu başarıyla gerçekleşti lütfen bekleyin!");
+    } catch (error) {
+      console.error("Sorgu eklerken bir hata oluştu:", error);
+      toast.error(
+        `Sorgu eklenirken bir sorun oluştu: ${
+          error.response ? error.response.data.message : error.message
+        }`
+      );
+    }
   };
 
-
-
-  /* ---------AXIOS İLE İLGİLİ İŞLEMLER---------------------------------------------------------- */
-
-
-
-
-
-
-  
   return (
     <div className="flex min-h-screen bg-black text-gray-100">
       <ToastContainer />
@@ -211,9 +237,7 @@ const Responder = () => {
                 />
                 <h4 className="mt-10 text-center">Çıktı olarak alınan mail</h4>
                 <div className="p-4 bg-gray-800 mx-auto my-2 rounded-lg max-w-md">
-                  <p>
-                    Gayet güzel falan çok iyi bir çıktı alındı göstermleik yazı
-                  </p>
+                  <p>{generatedContent}</p>
                 </div>
               </div>
             </div>
