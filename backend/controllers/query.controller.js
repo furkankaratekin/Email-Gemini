@@ -4,11 +4,7 @@ import bcryptjs from "bcryptjs";
 import { errorHandler } from "../utils/error.js";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
-//Tüm sorguları getir
 
-//SorguID'ye göre ID'yi getir
-
-//KullanıcıID'ye göre sorguları getir.
 
 //Kullanıcı ID'ye göre sorgu oluştur
 const genAIKey = "AIzaSyBNaReRTooBxrDIvM1w1ovIzBZwHSMKp0g";
@@ -30,7 +26,7 @@ export const addQuery = async (req, res, next) => {
       const result = await model.generateContent(prompt);
       const response = await result.response;
       const generatedContent = await response.text();
-      console.log(response.text());
+      //console.log(response.text());
      
       // Yeni tarif nesnesi oluştur
       const newQuery = new Query({
@@ -53,7 +49,61 @@ export const addQuery = async (req, res, next) => {
   }
 };
 
-//Kullanıcı ID'ye göre sorguyu sil
+
+//SorguID'ye göre ID'yi getir
+
+//KullanıcıID'ye göre sorguları getir.
+export const getQueryByUserId = async (req,res) => {
+  try{
+    const userId = req.params.id;
+    const queries = await Query.find({createdBy:userId});
+
+    //Eğer sorgular bulunursa,bunları JSON formatına çevir
+    if(queries.length > 0 ) {
+      res.json(queries)
+    }
+    else{
+      res.status(404).json({message : "Bu kullanıcıya ait sorgu yoktur"})
+    }
+    console.log("Sorgular" + queries)
+  } catch{
+    res.status(500).json({message : error.message});
+  }
+
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //Aşağıdaki kod bana örnek olması için yazılmıştır.
 //Bu kod tarafında girilen prompt sayesinde arama yapılabiliyor.
