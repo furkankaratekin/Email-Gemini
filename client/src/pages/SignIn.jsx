@@ -58,7 +58,7 @@ export default function SignIn() {
   return (
     <div className="flex flex-col min-h-screen">
       <ToastContainer />
-      <div className="flex-grow">
+      <div className="flex-grow mt-36">
         <div className="p-3 max-w-lg mx-auto">
           <h1 className="text-3xl text-center font-semibold my-7">Sign In</h1>
           <form onSubmit={handleSubmit} className="flex flex-col gap-4">

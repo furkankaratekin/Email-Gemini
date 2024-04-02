@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import OAuth from "../components/OAuth";
+import Footer from "../components/Footer";
 
 const Signup = () => {
   const [formData, setFormData] = useState({
@@ -59,7 +60,7 @@ const Signup = () => {
   return (
     <div className="flex flex-col min-h-screen">
       <ToastContainer />
-      <div className="flex-grow">
+      <div className="flex-grow mt-36">
         <div className="p-3 max-w-lg mx-auto">
           <h1 className="text-3xl text-center font-semibold my-7">Sign Up</h1>
           <form onSubmit={handleSubmit} className="flex flex-col gap-4">
@@ -112,6 +113,7 @@ const Signup = () => {
           </div>
         </div>
       </div>
+      <Footer></Footer>
     </div>
   );
 };
