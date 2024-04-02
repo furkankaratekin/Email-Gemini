@@ -8,6 +8,9 @@ const querySchema = new mongoose.Schema(
     secondprompt: {
       type: String,
     },
+    output:{
+      type:String,
+    },
     createdBy: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",

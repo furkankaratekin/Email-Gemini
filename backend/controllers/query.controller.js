@@ -22,25 +22,26 @@ export const addQuery = async (req, res, next) => {
       // Kullanıcı giriş yapmış, tarif ekleme işlemi gerçekleştir
       const { firstprompt, secondprompt } = req.body;
 
-      // Yeni tarif nesnesi oluştur
-      const newQuery = new Query({
-        firstprompt,
-        secondprompt,
-        createdBy: req.user.id, // Kullanıcının ID'si, tarifi kimin oluşturduğunu belirlemek için
-      });
-
-      // Yeni tarifi veritabanına kaydet
-      const savedQuery = await newQuery.save();
-
       // İçerik üretmek için Google Generative AI kullanılır
       //const prompt = `${firstprompt} ${secondprompt}`;
-      const prompt = `Merhaba, sana birazdan iki tane prompt vereceğim (firstprompt ve secondprompt). İlk prompt bana gelen e-mail olacak, 2.prompt ise o gelen maile nasıl karşılık vermeni istediğim prompt olacak. Birinci prompt ${firstprompt} , ikinci prompt ise ${secondprompt} bu şekilde . Bu verdiğim promptlara göre kişiye özel (maildeki ada ve ünvana göre) bir geri dönüş e-maili yazar mısın ?`
+      const prompt = `Merhaba, sana birazdan iki tane prompt vereceğim (firstprompt ve secondprompt). İlk prompt bana gelen e-mail olacak, 2.prompt ise o gelen maile nasıl karşılık vermeni istediğim prompt olacak. Birinci prompt ${firstprompt} , ikinci prompt ise ${secondprompt} bu şekilde . Bu verdiğim promptlara göre kişiye özel (maildeki ada ve ünvana göre) bir geri dönüş e-maili yazar mısın ?`;
       const genAI = new GoogleGenerativeAI(genAIKey);
       const model = genAI.getGenerativeModel({ model: "gemini-pro" });
       const result = await model.generateContent(prompt);
       const response = await result.response;
       const generatedContent = await response.text();
-      console.log(response.text())
+      console.log(response.text());
+     
+      // Yeni tarif nesnesi oluştur
+      const newQuery = new Query({
+        firstprompt,
+        secondprompt,
+        createdBy: req.user.id, // Kullanıcının ID'si, tarifi kimin oluşturduğunu belirlemek için
+        output: generatedContent,
+      });
+
+      // Yeni tarifi veritabanına kaydet
+      const savedQuery = await newQuery.save();
 
       // Başarılı bir şekilde kaydedildiğine dair yanıt gönder
       res.status(201).json({ query: savedQuery, generatedContent });
