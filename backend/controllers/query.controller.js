@@ -2,6 +2,7 @@ import Query from "../models/query.model.js";
 import User from "../models/user.model.js";
 import bcryptjs from "bcryptjs";
 import { errorHandler } from "../utils/error.js";
+import { GoogleGenerativeAI } from "@google/generative-ai";
 
 //Tüm sorguları getir
 
@@ -10,6 +11,9 @@ import { errorHandler } from "../utils/error.js";
 //KullanıcıID'ye göre sorguları getir.
 
 //Kullanıcı ID'ye göre sorgu oluştur
+const genAIKey = "AIzaSyBNaReRTooBxrDIvM1w1ovIzBZwHSMKp0g";
+const genAI = new GoogleGenerativeAI(genAIKey);
+
 export const addQuery = async (req, res, next) => {
   if (req.body.password) {
     return next(errorHandler(401, "You can update only your account"));
@@ -28,9 +32,21 @@ export const addQuery = async (req, res, next) => {
       // Yeni tarifi veritabanına kaydet
       const savedQuery = await newQuery.save();
 
+      // İçerik üretmek için Google Generative AI kullanılır
+      //const prompt = `${firstprompt} ${secondprompt}`;
+      const prompt = `Merhaba, sana birazdan iki tane prompt vereceğim (firstprompt ve secondprompt). İlk prompt bana gelen e-mail olacak, 2.prompt ise o gelen maile nasıl karşılık vermeni istediğim prompt olacak. Birinci prompt ${firstprompt} , ikinci prompt ise ${secondprompt} bu şekilde . Bu verdiğim promptlara göre kişiye özel (maildeki ada ve ünvana göre) bir geri dönüş e-maili yazar mısın ?`
+      const genAI = new GoogleGenerativeAI(genAIKey);
+      const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+      const result = await model.generateContent(prompt);
+      const response = await result.response;
+      const generatedContent = await response.text();
+      console.log(response.text())
+
       // Başarılı bir şekilde kaydedildiğine dair yanıt gönder
-      res.status(201).json(savedQuery);
+      res.status(201).json({ query: savedQuery, generatedContent });
     } catch (error) {
+      console.error("Error in addQueryAndGenerateContent:", error);
+
       next(error);
     }
   }
