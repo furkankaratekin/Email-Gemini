@@ -4,13 +4,11 @@ const querySchema = new mongoose.Schema(
   {
     firstprompt: {
       type: String,
-      required: true,
     },
     secondprompt: {
       type: String,
-      required: true,
     },
-    userId: {
+    createdBy: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },

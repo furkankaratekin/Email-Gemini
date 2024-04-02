@@ -1,49 +1,45 @@
-import Query from "../models/query.model";
-import User from "../models/user.model";
-import bcryptjs from 'bcryptjs';
+import Query from "../models/query.model.js";
+import User from "../models/user.model.js";
+import bcryptjs from "bcryptjs";
+import { errorHandler } from "../utils/error.js";
 
 //Tüm sorguları getir
 
-
-
 //SorguID'ye göre ID'yi getir
-
-
-
 
 //KullanıcıID'ye göre sorguları getir.
 
+//Kullanıcı ID'ye göre sorgu oluştur
+export const addQuery = async (req, res, next) => {
+  if (req.body.password) {
+    return next(errorHandler(401, "You can update only your account"));
+  } else {
+    try {
+      // Kullanıcı giriş yapmış, tarif ekleme işlemi gerçekleştir
+      const { firstprompt, secondprompt } = req.body;
 
+      // Yeni tarif nesnesi oluştur
+      const newQuery = new Query({
+        firstprompt,
+        secondprompt,
+        createdBy: req.user.id, // Kullanıcının ID'si, tarifi kimin oluşturduğunu belirlemek için
+      });
 
+      // Yeni tarifi veritabanına kaydet
+      const savedQuery = await newQuery.save();
 
-
-//Kullanıcı ID'ye göre  bir sorgu oluşturma
-/* export const addQuery = async (req,res,next) => {
-    if(req.body.password)
-} */
-
-
-
-
+      // Başarılı bir şekilde kaydedildiğine dair yanıt gönder
+      res.status(201).json(savedQuery);
+    } catch (error) {
+      next(error);
+    }
+  }
+};
 
 //Kullanıcı ID'ye göre sorguyu sil
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-//Aşağıdaki kod bana örnek olması için yazılmıştır. 
+//Aşağıdaki kod bana örnek olması için yazılmıştır.
 //Bu kod tarafında girilen prompt sayesinde arama yapılabiliyor.
-
 
 /* const { GoogleGenerativeAI } = require("@google/generative-ai");
 
