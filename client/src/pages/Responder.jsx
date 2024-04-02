@@ -6,6 +6,8 @@ import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
+import { RiChatNewLine } from "react-icons/ri";
+import { Link } from "react-router-dom";
 
 
 
@@ -53,8 +55,14 @@ const Responder = () => {
   };
 
   // Function to handle form submission
+  const refreshPage = () => {
+    window.location.reload();
+  };
+
 
   /* ---------AXIOS İLE İLGİLİ İŞLEMLER---------------------------------------------------------- */
+ 
+ //yapay zeka ile sorgu yapan kısım.
   const handleSubmit = async (e) => {
     e.preventDefault(); // Prevent default form submission behavior
     // Check if either input is empty and show an error toast if so
@@ -95,7 +103,7 @@ const Responder = () => {
       );
       console.log("Generated Content:", response.data.generatedContent);
       setGeneratedContent(response.data.generatedContent); // Save the generated content to state
-      toast.success("Sorgu başarıyla gerçekleşti lütfen bekleyin!");
+      toast.success("Sorgu başarıyla gerçekleşti.");
     } catch (error) {
       console.error("Sorgu eklerken bir hata oluştu:", error);
       toast.error(
@@ -106,6 +114,15 @@ const Responder = () => {
     }
   };
 
+  //sorguları listeleme kısmı
+
+  //önceki sorguları gösteren kısım
+
+
+
+
+/*------------AXIOS İLE İŞLEMLER BİTİŞ-------------------------------------------------------------- */
+    
   return (
     <div className="flex min-h-screen bg-black text-gray-100">
       <ToastContainer />
@@ -141,9 +158,15 @@ const Responder = () => {
       >
         {/* Toggle buton */}
         <IoMdBook
-          className="text-4xl cursor-pointer text-gray-200 relative top-5 left-5 z-50"
+          className="text-4xl cursor-pointer text-gray-200 relative top-5  left-5 z-50"
           onClick={toggleSidebar}
         />
+        <div>
+          <RiChatNewLine
+            className="text-4xl ml-5 mt-10 cursor-pointer"
+            onClick={refreshPage}
+          />
+        </div>
 
         {/* Ana içerik */}
         {/* Burada 2 tane div olacak ve bu divler değişkenlik gösterecek */}
@@ -209,7 +232,7 @@ const Responder = () => {
             </div>
           ) : (
             //arama sonrası div
-            <div className="bg-black text-white ">
+            <div className="bg-gray-900 text-white ">
               <div className="py-4">
                 <img
                   src="https://media.istockphoto.com/id/1300845620/tr/vekt%C3%B6r/kullan%C4%B1c%C4%B1-simgesi-d%C3%BCz-beyaz-arka-plan-%C3%BCzerinde-izole-kullan%C4%B1c%C4%B1-sembol%C3%BC-vekt%C3%B6r-ill%C3%BCstrasyonu.jpg?s=612x612&w=0&k=20&c=BapxTLg8R3jjWnvaSXeHqgtou_-FcyBKmAkUsgwQzxU="
@@ -227,6 +250,8 @@ const Responder = () => {
                 <div className="p-4 bg-gray-800 mx-auto my-2 rounded-lg max-w-md">
                   <p>{submittedResponses.shorthandResponse}</p>
                 </div>
+
+                <p className="text-center mb-3 mt-7">Sorgu yapma işlemi internet hızınıza bağlı olarak 10 ile 30 saniye arası sürmektedir.</p>
               </div>
               <hr />
               <div className="py-4 mt-10">

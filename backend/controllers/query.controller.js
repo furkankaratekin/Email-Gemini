@@ -20,7 +20,7 @@ export const addQuery = async (req, res, next) => {
 
       // İçerik üretmek için Google Generative AI kullanılır
       //const prompt = `${firstprompt} ${secondprompt}`;
-      const prompt = `Merhaba, sana birazdan iki tane prompt vereceğim (firstprompt ve secondprompt). İlk prompt bana gelen e-mail olacak, 2.prompt ise o gelen maile nasıl karşılık vermeni istediğim prompt olacak. Birinci prompt ${firstprompt} , ikinci prompt ise ${secondprompt} bu şekilde . Bu verdiğim promptlara göre kişiye özel (maildeki ada ve ünvana göre) bir geri dönüş e-maili yazar mısın ?`;
+      const prompt = `Merhaba, sana birazdan iki tane prompt vereceğim (firstprompt ve secondprompt). İlk prompt bana gelen e-mail olacak, 2.prompt ise o gelen maile nasıl karşılık vermeni istediğim prompt olacak. Birinci prompt ${firstprompt} , ikinci prompt ise ${secondprompt} bu şekilde . Bu verdiğim promptlara göre kişiye özel (maildeki ada ve ünvana göre) bir geri dönüş e-maili yazar mısın .Bir de firstprompt secondpropmt yazma sadece e-mail olarak cevap ver`;
       const genAI = new GoogleGenerativeAI(genAIKey);
       const model = genAI.getGenerativeModel({ model: "gemini-pro" });
       const result = await model.generateContent(prompt);
