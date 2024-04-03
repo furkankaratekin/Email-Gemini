@@ -112,26 +112,56 @@ const Responder = () => {
   };
 
   //Tüm sorguları listeleme kısmı
-  useEffect(() => {
-    const fetchListQueries = async () => {
-      try {
-        const response = await axios.get(
-          `http://localhost:5000/api/query/user-query/${currentUser._id}`
-        );
-        setListQuery(response.data);
-      } catch (error) {
-        console.error("Tüm sorgular yüklenirken bir hata oluştu!", error);
-      }
-      fetchListQueries();
-    };
-  },[]);
+useEffect(() => {
+  const fetchListQueries = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:5000/api/query/user-query/${currentUser._id}`
+      );
+      setListQuery(response.data);
+    } catch (error) {
+      console.error("Tüm sorgular yüklenirken bir hata oluştu!", error);
+    }
+  };
+
+  fetchListQueries(); // Fonksiyonun doğru yerde çağrıldığından emin olun.
+}, []);
+
 
   //önceki sorguları id'ye göre listeleme kısmı
 
   //önceki sorguları id'ye göre silen kısım
+  const handleDeleteQuery = async (queryId) => {
+    const config = {
+      headers: { Authorization: `Bearer ${token}` },
+    };
+    try {
+      await axios.delete(
+        `http://localhost:5000/api/query/delete/${query._id}`,
+        config
+      );
+      toast.success("Yorum başarıyla silindi!");
+      // Silinen yorumu yorum listesinden çıkar
+      setListQuery((prevQueries) =>
+        prevQueries.filter((query) => query._id !== queryId)
+      );
+    } catch (error) {
+      console.error("Yorum silinirken bir hata oluştu:", error);
+      toast.error(
+        `Yorum silinirken bir sorun oluştu: ${
+          error.response ? error.response.data.message : error.message
+        }`
+      );
+    }
+  };
+
+
+
+
+
 
   /*------------AXIOS İLE İŞLEMLER BİTİŞ-------------------------------------------------------------- */
-  // console.log(currentUser._id)
+  console.log(currentUser._id)
 
   return (
     <div className="bg-gray-900">
@@ -148,14 +178,23 @@ const Responder = () => {
           <ul className="list-disc pl-10">
             {listQuery.map((query, index) => (
               <li
-                key={index}
-                className="py-2 flex justify-between items-center hover:bg-gray-600 cursor-pointer"
+                key={query._id} // Daha güvenli bir key değeri için query'nin unique _id'sini kullanıyoruz.
+                className="py-2 flex flex-col justify-between items-start hover:bg-gray-600 cursor-pointer mb-4"
               >
-                {query}
-                <MdOutlineDelete
-                  className="text-2xl mr-3 text-gray-300 hover:text-red-500"
-                  onClick={() => deleteQuery(index)}
-                />
+                <div className="flex justify-between items-start w-full">
+                  <div className="flex flex-col">
+
+                    <div>
+                      
+                      {query.secondprompt || "Boş"}
+                    </div>
+
+                  </div>
+                  <MdOutlineDelete
+                    className="text-2xl ml-3 text-gray-300 hover:text-red-500 self-start"
+                    onClick={() => deleteQuery(query._id)}
+                  />
+                </div>
               </li>
             ))}
           </ul>
