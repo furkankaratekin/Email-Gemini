@@ -9,6 +9,7 @@ import { useDispatch } from "react-redux";
 import { RiChatNewLine } from "react-icons/ri";
 import { Link } from "react-router-dom";
 import Footer from "../components/Footer";
+import '../App.css'
 
 const Responder = () => {
 
@@ -306,8 +307,12 @@ useEffect(() => {
                   <h4 className="mt-10 text-center">
                     Çıktı olarak alınan mail
                   </h4>
-                  <div className="p-4 bg-gray-800 mx-auto my-2 rounded-lg max-w-md">
-                    <p>{generatedContent}</p>
+                  <div className="p-4 bg-gray-800 mx-auto my-2 rounded-lg max-w-md content-container">
+                    {generatedContent ? (
+                      <p>{generatedContent}</p>
+                    ) : (
+                      <div className="loading"></div>
+                    )}
                   </div>
                 </div>
               </div>
