@@ -9,10 +9,9 @@ import { useDispatch } from "react-redux";
 import { RiChatNewLine } from "react-icons/ri";
 import { Link } from "react-router-dom";
 import Footer from "../components/Footer";
-import '../App.css'
+import "../App.css";
 
 const Responder = () => {
-
   const [emailContent, setEmailContent] = useState(""); // State for email content
   const [shorthandResponse, setShorthandResponse] = useState(""); // State for shorthand response
   // State to manage sidebar open/close
@@ -77,7 +76,6 @@ const Responder = () => {
     setSubmittedResponses({ emailContent, shorthandResponse });
     setShowFirstDiv(!showFirstDiv); // Gösterilen div'i değiştir
 
-
     // Clear the form fields after submission
     setEmailContent("");
     setShorthandResponse("");
@@ -109,21 +107,20 @@ const Responder = () => {
   };
 
   //Tüm sorguları listeleme kısmı
-useEffect(() => {
-  const fetchListQueries = async () => {
-    try {
-      const response = await axios.get(
-        `http://localhost:5000/api/query/user-query/${currentUser._id}`
-      );
-      setListQuery(response.data);
-    } catch (error) {
-      console.error("Tüm sorgular yüklenirken bir hata oluştu!", error);
-    }
-  };
+  useEffect(() => {
+    const fetchListQueries = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:5000/api/query/user-query/${currentUser._id}`
+        );
+        setListQuery(response.data);
+      } catch (error) {
+        console.error("Tüm sorgular yüklenirken bir hata oluştu!", error);
+      }
+    };
 
-  fetchListQueries(); // Fonksiyonun doğru yerde çağrıldığından emin olun.
-}, []);
-
+    fetchListQueries(); // Fonksiyonun doğru yerde çağrıldığından emin olun.
+  }, []);
 
   //önceki sorguları id'ye göre listeleme kısmı
 
@@ -153,11 +150,6 @@ useEffect(() => {
     }
   };
 
-
-
-
-
-
   /*------------AXIOS İLE İŞLEMLER BİTİŞ-------------------------------------------------------------- */
   return (
     <div className="bg-gray-900">
@@ -179,8 +171,9 @@ useEffect(() => {
               >
                 <div className="flex justify-between items-start w-full">
                   <div className="flex flex-col">
-                    <div>{query.firstprompt || "Boş"}</div>
+                      <div>{query.firstprompt || "Boş"}</div>
                   </div>
+
                   <MdOutlineDelete
                     className="text-2xl ml-3 text-gray-300 hover:text-red-500 self-start"
                     onClick={() => handleDeleteQuery(query._id)} // Burada düzeltme yapıldı
