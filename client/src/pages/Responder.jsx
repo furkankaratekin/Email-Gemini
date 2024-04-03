@@ -75,6 +75,8 @@ const Responder = () => {
     // Add any additional actions you want to take after form submission here
     setSubmittedResponses({ emailContent, shorthandResponse });
     setShowFirstDiv(!showFirstDiv); // Gösterilen div'i değiştir
+
+
     // Clear the form fields after submission
     setEmailContent("");
     setShorthandResponse("");
@@ -176,7 +178,7 @@ useEffect(() => {
               >
                 <div className="flex justify-between items-start w-full">
                   <div className="flex flex-col">
-                    <div>{query.secondprompt || "Boş"}</div>
+                    <div>{query.firstprompt || "Boş"}</div>
                   </div>
                   <MdOutlineDelete
                     className="text-2xl ml-3 text-gray-300 hover:text-red-500 self-start"
