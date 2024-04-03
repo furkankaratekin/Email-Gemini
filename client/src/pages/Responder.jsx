@@ -11,13 +11,7 @@ import { Link } from "react-router-dom";
 import Footer from "../components/Footer";
 
 const Responder = () => {
-  const [queries, setQueries] = useState([
-    "Query 1",
-    "Query 2",
-    "Query 3",
-    "Query 4",
-    "Query 5",
-  ]);
+
   const [emailContent, setEmailContent] = useState(""); // State for email content
   const [shorthandResponse, setShorthandResponse] = useState(""); // State for shorthand response
   // State to manage sidebar open/close
@@ -137,14 +131,15 @@ useEffect(() => {
     };
     try {
       await axios.delete(
-        `http://localhost:5000/api/query/delete/${query._id}`,
+        `http://localhost:5000/api/query/delete/${queryId}`,
         config
       );
       toast.success("Yorum başarıyla silindi!");
       // Silinen yorumu yorum listesinden çıkar
-      setListQuery((prevQueries) =>
-        prevQueries.filter((query) => query._id !== queryId)
+      const updatedListQuery = listQuery.filter(
+        (query) => query._id !== queryId
       );
+      setListQuery(updatedListQuery);
     } catch (error) {
       console.error("Yorum silinirken bir hata oluştu:", error);
       toast.error(
@@ -161,8 +156,6 @@ useEffect(() => {
 
 
   /*------------AXIOS İLE İŞLEMLER BİTİŞ-------------------------------------------------------------- */
-  console.log(currentUser._id)
-
   return (
     <div className="bg-gray-900">
       <div className="flex min-h-screen bg-black text-gray-100 ">
@@ -183,16 +176,11 @@ useEffect(() => {
               >
                 <div className="flex justify-between items-start w-full">
                   <div className="flex flex-col">
-
-                    <div>
-                      
-                      {query.secondprompt || "Boş"}
-                    </div>
-
+                    <div>{query.secondprompt || "Boş"}</div>
                   </div>
                   <MdOutlineDelete
                     className="text-2xl ml-3 text-gray-300 hover:text-red-500 self-start"
-                    onClick={() => deleteQuery(query._id)}
+                    onClick={() => handleDeleteQuery(query._id)} // Burada düzeltme yapıldı
                   />
                 </div>
               </li>
