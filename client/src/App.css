@@ -1,0 +1,39 @@
+.animatedBackground {
+  background: linear-gradient(to bottom, #000000, #330033);
+  overflow: hidden;
+  position: relative;
+}
+
+.balloon {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: #36104b; /* Balonların bembeyaz olması için */
+  position: absolute;
+  bottom: -20px; /* Başlangıçta ekrandan dışarıda */
+  animation: floatUp linear infinite, moveSideWays 20s ease-in-out infinite;
+}
+
+@keyframes floatUp {
+  0% {
+    bottom: -100px; /* Ekranın altından başlayarak */
+  }
+  to {
+    bottom: 100vh; /* Ekranın üstüne doğru yukarı çık */
+  }
+}
+
+@keyframes moveSideWays {
+  0%, 100% {
+    transform: translateX(0px);
+  }
+  50% {
+    transform: translateX(100px); /* Sağa veya sola doğru 100px hareket ettir */
+  }
+}
+
+.content {
+  position: relative;
+  z-index: 10; /* İçeriği balonların önünde tut */
+  text-align: center;
+}

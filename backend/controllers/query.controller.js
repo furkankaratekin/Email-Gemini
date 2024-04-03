@@ -4,8 +4,6 @@ import bcryptjs from "bcryptjs";
 import { errorHandler } from "../utils/error.js";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
-
-
 //Kullanıcı ID'ye göre sorgu oluştur
 const genAIKey = "AIzaSyBNaReRTooBxrDIvM1w1ovIzBZwHSMKp0g";
 const genAI = new GoogleGenerativeAI(genAIKey);
@@ -27,7 +25,7 @@ export const addQuery = async (req, res, next) => {
       const response = await result.response;
       const generatedContent = await response.text();
       //console.log(response.text());
-     
+
       // Yeni tarif nesnesi oluştur
       const newQuery = new Query({
         firstprompt,
@@ -49,9 +47,8 @@ export const addQuery = async (req, res, next) => {
   }
 };
 
-
 //SorguID'ye göre sorguları getir
-export const getQueryById = async (req,res) => {
+export const getQueryById = async (req, res) => {
   try {
     //URL'den gelen ID parametresini al
     const { id } = req.params;
@@ -69,33 +66,54 @@ export const getQueryById = async (req,res) => {
     // Hata oluşursa, 500 hatası ile hata mesajını döndür
     res.status(500).json({ message: error.message });
   }
-}
-
-
+};
 
 //KullanıcıID'ye göre sorguları getir.
-export const getQueryByUserId = async (req,res) => {
-  try{
+export const getQueryByUserId = async (req, res) => {
+  try {
     const userId = req.params.id;
-    const queries = await Query.find({createdBy:userId});
+    const queries = await Query.find({ createdBy: userId });
 
     //Eğer sorgular bulunursa,bunları JSON formatına çevir
-    if(queries.length > 0 ) {
-      res.json(queries)
+    if (queries.length > 0) {
+      res.json(queries);
+    } else {
+      res.status(404).json({ message: "Bu kullanıcıya ait sorgu yoktur" });
     }
-    else{
-      res.status(404).json({message : "Bu kullanıcıya ait sorgu yoktur"})
-    }
-    console.log("Sorgular" + queries)
-  } catch{
-    res.status(500).json({message : error.message});
+    console.log("Sorgular" + queries);
+  } catch {
+    res.status(500).json({ message: error.message });
   }
+};
+
+//Kullanıcının yaptığı girişe göre query'leri sil
+export const deleteQuery = async (req, res) => {
+  const { queryId } = req.params;
+
+  try {
+    const query = await Query.findById(queryId);
+    if (!query) {
+      return res.status(404).json({ message: "Query not found" });
+    }
+
+    // Token ile gelen kullanıcı bilgilerini kullanarak kullanıcıyı bul
+    const user = await User.findById(req.user.id);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    await Query.findByIdAndDelete(queryId);
+    // Başarı yanıtı dön
+    res.status(200).json({ message: "Query deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
 
 
 
 
 
-}
 
 
 
@@ -106,25 +124,39 @@ export const getQueryByUserId = async (req,res) => {
 
 
 
+//Yorumu sil
+/* export const deleteComment = async (req, res) => {
+  const { commentId } = req.params; // Yorumun ID'sini URL parametresinden al
 
+  try {
+    const comment = await Comment.findById(commentId);
+    if (!comment) {
+      return res.status(404).json({ message: "Comment not found" });
+    }
 
+    // Token ile gelen kullanıcı bilgilerini kullanarak kullanıcıyı bul
+    const user = await User.findById(req.user.id);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
 
+    // Yorumun sahibi ile isteği yapan kullanıcı aynı mı kontrol et
+    if (comment.user_username !== user.username) {
+      // Kullanıcılar eşleşmiyorsa yetki hatası ver
+      return res
+        .status(403)
+        .json({ message: "You can only delete your own comments" });
+    }
 
+    // Yorumu sil
+    await Comment.findByIdAndDelete(commentId);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    // Başarı yanıtı dön
+    res.status(200).json({ message: "Comment deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+}; */
 
 //Aşağıdaki kod bana örnek olması için yazılmıştır.
 //Bu kod tarafında girilen prompt sayesinde arama yapılabiliyor.

@@ -7,7 +7,7 @@ const Footer = () => {
     <footer className="w-full bg-gray-800 text-white p-4 relative">
       <div className="max-w-screen-xl mx-auto flex justify-between items-center">
         <div>
-          <p>© 2024 My Website. All rights reserved.</p>
+          <p>© 2024 Furkan Karatekin</p>
         </div>
         <div className="flex space-x-4">
           <IconContext.Provider
@@ -15,9 +15,6 @@ const Footer = () => {
               className: "transition-colors duration-300 hover:text-blue-500",
             }}
           >
-            <a href="https://twitter.com" aria-label="Twitter">
-              <FaTwitter />
-            </a>
             <a href="https://instagram.com" aria-label="Instagram">
               <FaInstagram />
             </a>

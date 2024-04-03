@@ -4,6 +4,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import OAuth from "../components/OAuth";
 import Footer from "../components/Footer";
+import Navbar from "../components/Navbar";
 
 const Signup = () => {
   const [formData, setFormData] = useState({
@@ -58,7 +59,8 @@ const Signup = () => {
   };
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen bg-gradient-to-r from-violet-50 via-violet-200 to-gray-200 ...">
+      <Navbar></Navbar>
       <ToastContainer />
       <div className="flex-grow mt-36">
         <div className="p-3 max-w-lg mx-auto">

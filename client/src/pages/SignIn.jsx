@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import OAuth from "../components/OAuth";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Navbar from "../components/Navbar";
 
 export default function SignIn() {
   const [formData, setFormData] = useState({});
@@ -56,7 +57,8 @@ export default function SignIn() {
   }, []);
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen bg-gradient-to-r from-violet-50 via-violet-200 to-gray-200 ...">
+      <Navbar></Navbar>
       <ToastContainer />
       <div className="flex-grow mt-36">
         <div className="p-3 max-w-lg mx-auto">

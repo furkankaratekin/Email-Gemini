@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { IoMdBook } from "react-icons/io";
 import { MdOutlineDelete } from "react-icons/md";
 import { ToastContainer, toast } from "react-toastify";
@@ -8,11 +8,7 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { RiChatNewLine } from "react-icons/ri";
 import { Link } from "react-router-dom";
-import Footer from '../components/Footer'
-
-
-
-
+import Footer from "../components/Footer";
 
 const Responder = () => {
   const [queries, setQueries] = useState([
@@ -35,6 +31,7 @@ const Responder = () => {
   const dispatch = useDispatch();
   const token = currentUser.token;
   const [generatedContent, setGeneratedContent] = useState(""); // State for generated content
+  const [listQuery, setListQuery] = useState([]);
 
   // Function to toggle sidebar
   const toggleSidebar = () => {
@@ -60,10 +57,9 @@ const Responder = () => {
     window.location.reload();
   };
 
-
   /* ---------AXIOS İLE İLGİLİ İŞLEMLER---------------------------------------------------------- */
- 
- //yapay zeka ile sorgu yapan kısım.
+
+  //yapay zeka ile sorgu yapan kısım.
   const handleSubmit = async (e) => {
     e.preventDefault(); // Prevent default form submission behavior
     // Check if either input is empty and show an error toast if so
@@ -115,18 +111,28 @@ const Responder = () => {
     }
   };
 
-  //sorguları listeleme kısmı
+  //Tüm sorguları listeleme kısmı
+  useEffect(() => {
+    const fetchListQueries = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:5000/api/query/user-query/${currentUser._id}`
+        );
+        setListQuery(response.data);
+      } catch (error) {
+        console.error("Tüm sorgular yüklenirken bir hata oluştu!", error);
+      }
+      fetchListQueries();
+    };
+  },[]);
 
+  //önceki sorguları id'ye göre listeleme kısmı
 
-  
+  //önceki sorguları id'ye göre silen kısım
 
-  //önceki sorguları gösteren kısım
+  /*------------AXIOS İLE İŞLEMLER BİTİŞ-------------------------------------------------------------- */
+  // console.log(currentUser._id)
 
-
-
-
-/*------------AXIOS İLE İŞLEMLER BİTİŞ-------------------------------------------------------------- */
-    
   return (
     <div className="bg-gray-900">
       <div className="flex min-h-screen bg-black text-gray-100 ">
@@ -140,7 +146,7 @@ const Responder = () => {
           {/* Sidebar içeriği burada */}
           <h2 className="text-xl p-5">My Previous Queries</h2>
           <ul className="list-disc pl-10">
-            {queries.map((query, index) => (
+            {listQuery.map((query, index) => (
               <li
                 key={index}
                 className="py-2 flex justify-between items-center hover:bg-gray-600 cursor-pointer"
@@ -282,11 +288,8 @@ const Responder = () => {
           </div>
         </div>
       </div>
-
-      
     </div>
   );
 };
 
 export default Responder;
-
