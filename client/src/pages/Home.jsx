@@ -40,10 +40,10 @@ const Home = () => {
             Yapay Zeka İle Maillerini Hızlıca Cevapla
           </h4>
           <p className="text-[#FBFAEE] mt-8 hover:text-[#FAF9E6] transition duration-150 ease-in-out">
-            Bu yapay zeka ile e-postalarınızı zahmetsizce yönetmenin keyfini çıkarın
+            Bu yapay zeka ile e-postalarınızı zahmetsizce yönetmenin keyfini
+            çıkarın
           </p>
 
-          <p className="flex justify-center"></p>
           <div className="mt-20  flex justify-center gap-2 mx-4  ">
             <Link
               className="text-blue-500 hover:text-blue-700 text-lg font-semibold py-2 px-4 border border-blue-500 hover:border-transparent rounded transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110"
@@ -58,6 +58,9 @@ const Home = () => {
               Giriş yap
             </Link>
           </div>
+          <p className="text-violet-300 mt-8 hover:text-[#FAF9E6] transition duration-150 ease-in-out">
+            Bu Yapay Zekayı Kullanabilmek İçin Giriş Yapılmalıdır
+          </p>
         </div>
       </div>
       <Footer className="w-full" />

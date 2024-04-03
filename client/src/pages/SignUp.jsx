@@ -50,7 +50,7 @@ const Signup = () => {
         return;
       }
       localStorage.setItem("signupSuccess", "true");
-      toast.success("Account created successfully!");
+      toast.success("Hesabınız başarı ile oluşturuldu.");
     } catch (err) {
       setLoading(false);
       setError(err.message || "Something went wrong!");
@@ -64,12 +64,13 @@ const Signup = () => {
       <ToastContainer />
       <div className="flex-grow mt-36">
         <div className="p-3 max-w-lg mx-auto">
-          <h1 className="text-3xl text-center font-semibold my-7">Sign Up</h1>
+      
+          <h1 className="text-3xl text-center font-semibold my-7">Hesap Oluştur</h1>
           <form onSubmit={handleSubmit} className="flex flex-col gap-4">
             <input
               type="text"
               id="username"
-              placeholder="Username"
+              placeholder="Kullanıcı Adı"
               value={formData.username}
               onChange={handleChange}
               className="bg-slate-100 p-3 rounded-lg"
@@ -77,7 +78,7 @@ const Signup = () => {
             <input
               type="email"
               id="email"
-              placeholder="Email"
+              placeholder="E-mail"
               value={formData.email}
               onChange={handleChange}
               className="bg-slate-100 p-3 rounded-lg"
@@ -85,7 +86,7 @@ const Signup = () => {
             <input
               type="password"
               id="password"
-              placeholder="Password"
+              placeholder="Parola"
               value={formData.password}
               onChange={handleChange}
               className="bg-slate-100 p-3 rounded-lg"
@@ -93,7 +94,7 @@ const Signup = () => {
             <input
               type="password"
               id="confirmPassword"
-              placeholder="Confirm Password"
+              placeholder="Parolayı Doğrula"
               value={formData.confirmPassword}
               onChange={handleChange}
               className="bg-slate-100 p-3 rounded-lg"
@@ -103,16 +104,18 @@ const Signup = () => {
               disabled={loading}
               className="bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-50"
             >
-              {loading ? "Loading..." : "Sign Up"}
+              {loading ? "Loading..." : "Hesap Oluştur"}
             </button>
             {/* <OAuth /> */}
           </form>
           <div className="flex gap-2 mt-5">
-            <p>Have an account?</p>
+            <p>Hesabınız var mı?</p>
             <Link to="/sign-in" className="text-blue-500">
-              Sign in
+              Giriş Yap
             </Link>
           </div>
+          <p className="text-center mt-6">Şu an demo olduğu için email doğrulaması yoktur</p>
+          <p className="text-center">Örnek email:namesurname@gmail.com</p>
         </div>
       </div>
       <Footer></Footer>

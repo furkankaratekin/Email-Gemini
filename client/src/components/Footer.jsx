@@ -15,13 +15,19 @@ const Footer = () => {
               className: "transition-colors duration-300 hover:text-blue-500",
             }}
           >
-            <a href="https://instagram.com" aria-label="Instagram">
+            <a
+              href="https://www.instagram.com/furkankaratekinnn/"
+              aria-label="Instagram"
+            >
               <FaInstagram />
             </a>
-            <a href="https://linkedin.com" aria-label="LinkedIn">
+            <a
+              href="https://www.linkedin.com/in/furkan-karatekin-479017234/"
+              aria-label="LinkedIn"
+            >
               <FaLinkedinIn />
             </a>
-            <a href="https://github.com" aria-label="GitHub">
+            <a href="https://github.com/furkankaratekin" aria-label="GitHub">
               <FaGithub />
             </a>
           </IconContext.Provider>

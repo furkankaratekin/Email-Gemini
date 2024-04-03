@@ -62,18 +62,18 @@ export default function SignIn() {
       <ToastContainer />
       <div className="flex-grow mt-36">
         <div className="p-3 max-w-lg mx-auto">
-          <h1 className="text-3xl text-center font-semibold my-7">Sign In</h1>
+          <h1 className="text-3xl text-center font-semibold my-7">Giriş Yap</h1>
           <form onSubmit={handleSubmit} className="flex flex-col gap-4">
             <input
               type="email"
-              placeholder="Email"
+              placeholder="E-mail"
               id="email"
               className="bg-slate-100 p-3 rounded-lg"
               onChange={handleChange}
             />
             <input
               type="password"
-              placeholder="Password"
+              placeholder="Parola"
               id="password"
               className="bg-slate-100 p-3 rounded-lg"
               onChange={handleChange}
@@ -82,14 +82,14 @@ export default function SignIn() {
               disabled={loading}
               className="bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80"
             >
-              {loading ? "Loading..." : "Sign In"}
+              {loading ? "Loading..." : "Giriş Yap"}
             </button>
            {/*  <OAuth /> */}
           </form>
           <div className="flex gap-2 mt-5">
-            <p>Dont Have an account?</p>
+            <p>Hesabını Yok mu?</p>
             <Link to="/sign-up">
-              <span className="text-blue-500">Sign up</span>
+              <span className="text-blue-500">Üye Ol</span>
             </Link>
           </div>
           <p className="text-red-700 mt-5">
