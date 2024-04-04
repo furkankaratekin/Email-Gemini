@@ -5,7 +5,7 @@ import { initializeApp } from "firebase/app";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyDKAGDckGmAYfE4KoXqrwiUnB7tJmBDugQ",
+  apiKey: process.env.FIREBASE_API_KEY,
   authDomain: "email-gemini.firebaseapp.com",
   projectId: "email-gemini",
   storageBucket: "email-gemini.appspot.com",
