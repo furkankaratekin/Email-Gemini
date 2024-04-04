@@ -38,23 +38,23 @@ const ListQuery = () => {
 
 
   return (
-    <div className="bg-gray-800 min-h-screen">
-      <div class="bg-gray-800 text-white">
-        <section class="body-font">
-          <div className="flex justify-center   ">
+    <div className="flex flex-col min-h-screen bg-gray-800">
+      <div className="flex-grow">
+        <section class="body-font text-white">
+          <div className="flex justify-center pt-8">
             <Link
-              className=" mt-32 text-blue-500 hover:text-blue-700 text-lg font-semibold py-2 px-4 border border-blue-500 hover:border-transparent rounded transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110"
+              className="text-blue-500 hover:text-blue-700 text-lg font-semibold py-2 px-4 border border-blue-500 hover:border-transparent rounded transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110"
               to="/responder"
             >
               Yeni Sohbet
             </Link>
           </div>
-          <div class="container px-5 py-24 mx-auto flex flex-col">
+          <div class="container px-5 py-8 mx-auto flex flex-col">
             <div class="lg:w-4/6 mx-auto">
               <div class="flex flex-col sm:flex-row mt-10">
                 <div class="sm:w-1/3 text-center sm:pr-8 sm:py-8">
                   <div class="flex flex-col items-center text-center justify-center">
-                    <h2 class="font-medium title-font mt-4 text-white text-lg">
+                    <h2 class="font-medium title-font mt-4 text-lg">
                       {detailsQuery.secondprompt}
                     </h2>
                     <div class="w-12 h-1 bg-indigo-500 rounded mt-2 mb-4"></div>
@@ -70,9 +70,8 @@ const ListQuery = () => {
             </div>
           </div>
         </section>
-        <div className="mt-56"></div>
-        <Footer></Footer>
       </div>
+      <Footer className="mt-auto"></Footer>
     </div>
   );
 
