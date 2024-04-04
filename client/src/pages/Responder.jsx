@@ -174,9 +174,11 @@ const Responder = () => {
               >
                 <div className="flex justify-between items-start w-full">
                   <Link to={`/responder/${query._id}`}>
-                    <div className="flex flex-col">
-                      <div>{query.firstprompt || "Boş"}</div>
-                    </div>
+                    
+                      <div className="flex flex-col">
+                        <div>{query.secondprompt || "Boş"}</div>
+                      </div>
+                   
                   </Link>
 
                   <MdOutlineDelete
