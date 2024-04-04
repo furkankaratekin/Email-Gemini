@@ -5,8 +5,8 @@ import Responder from './pages/Responder'
 import SignIn from './pages/SignIn';
 import Signup from './pages/SignUp';
 import PrivateRoute from './components/PrivateRoute';
-import Navbar from './components/Navbar';
 import Profile from './pages/Profile';
+import ListQuery from './pages/ListQuery';
 const App = () => {
   return (
     <>
@@ -19,6 +19,7 @@ const App = () => {
           <Route element={<PrivateRoute />}>
             <Route path="/profile" element={<Profile />} />
             <Route path="/responder" element={<Responder />} />
+            <Route path="/responder/:id" element={<ListQuery />} />
           </Route>
         </Routes>
       </Router>

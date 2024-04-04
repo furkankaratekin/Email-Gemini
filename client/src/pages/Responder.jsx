@@ -81,8 +81,8 @@ const Responder = () => {
     setShorthandResponse("");
 
     const bodyParameters = {
-      firstprompt: submittedResponses.emailContent,
-      secondprompt: submittedResponses.shorthandResponse,
+      firstprompt: emailContent,
+      secondprompt: shorthandResponse,
     };
     const config = {
       headers: { Authorization: `Bearer ${token}` },
@@ -139,6 +139,7 @@ const Responder = () => {
       const updatedListQuery = listQuery.filter(
         (query) => query._id !== queryId
       );
+      
       setListQuery(updatedListQuery);
     } catch (error) {
       console.error("Yorum silinirken bir hata oluştu:", error);
@@ -149,6 +150,8 @@ const Responder = () => {
       );
     }
   };
+  console.log(listQuery)
+  console.log(listQuery.map((item) => item._id));
 
   /*------------AXIOS İLE İŞLEMLER BİTİŞ-------------------------------------------------------------- */
   return (
@@ -170,9 +173,11 @@ const Responder = () => {
                 className="py-2 flex flex-col justify-between items-start hover:bg-gray-600 cursor-pointer mb-4"
               >
                 <div className="flex justify-between items-start w-full">
-                  <div className="flex flex-col">
+                  <Link to={`/responder/${query._id}`}>
+                    <div className="flex flex-col">
                       <div>{query.firstprompt || "Boş"}</div>
-                  </div>
+                    </div>
+                  </Link>
 
                   <MdOutlineDelete
                     className="text-2xl ml-3 text-gray-300 hover:text-red-500 self-start"
