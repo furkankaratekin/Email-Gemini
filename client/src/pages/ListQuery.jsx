@@ -38,7 +38,7 @@ const ListQuery = () => {
 
 
   return (
-    <div className="flex flex-col min-h-screen bg-gray-800">
+    <div className="flex flex-col min-h-screen bg-gray-900">
       <div className="flex-grow">
         <section class="body-font text-white">
           <div className="flex justify-center pt-8">

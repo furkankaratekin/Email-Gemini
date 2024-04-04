@@ -104,9 +104,7 @@ const Responder = () => {
     } catch (error) {
       console.error("Sorgu eklerken bir hata oluştu:", error);
       toast.error(
-        `Sorgu eklenirken bir sorun oluştu: ${
-          error.response ? error.response.data.message : error.message
-        }`
+        `Lütfen giriş yapınız.`
       );
     }
   };
@@ -168,7 +166,7 @@ const Responder = () => {
           } transition-all duration-300 bg-gray-700 text-white h-full fixed top-0 left-0 overflow-hidden`}
         >
           {/* Sidebar içeriği burada */}
-          <h2 className="text-xl p-5">My Previous Queries</h2>
+          <h2 className="text-xl p-5">Önceki Sorgularım</h2>
           <ul className="list-disc pl-10">
             {listQuery.map((query, index) => (
               <li
@@ -222,7 +220,7 @@ const Responder = () => {
                   onSubmit={handleSubmit}
                   className="space-y-4 w-full max-w-4xl mx-auto"
                 >
-                  <h3 className="text-3xl mb-12">Email Cevaplayıcı</h3>
+                  <h3 className="text-3xl mb-12">E-mail Cevaplayıcı</h3>
                   <p className="text-lg mb-2">
                     Yapay zeka ile kolayca e-maillerini cevapla
                   </p>
@@ -231,13 +229,13 @@ const Responder = () => {
                       htmlFor="emailContent"
                       className="block text-sm font-medium text-gray-200"
                     >
-                      Email to Respond To
+                      Cevaplanmasını İstediğniz E-Mail
                     </label>
                     <textarea
                       id="emailContent"
                       rows="6"
                       className="mt-1 block w-full border border-gray-800 rounded-lg shadow-sm bg-gray-800 text-white focus:ring-blue-500 focus:border-blue-500"
-                      placeholder="Paste the email you want to respond to"
+                      placeholder="E-Mailinizi Buraya Kopyalayın"
                       value={emailContent}
                       onChange={(e) => setEmailContent(e.target.value)}
                     />
@@ -247,13 +245,13 @@ const Responder = () => {
                       htmlFor="shorthandResponse"
                       className="block text-sm font-medium text-gray-200"
                     >
-                      Shorthand Response
+                      Kısaca Nasıl Cevaplayalım
                     </label>
                     <textarea
                       id="shorthandResponse"
                       rows="4" // Bu değeri artırarak başlangıçta daha fazla satır gösterilmesini sağladık
                       className="mt-1 block w-full border border-gray-700 rounded-lg shadow-sm bg-gray-800 text-white focus:ring-blue-500 focus:border-blue-500"
-                      placeholder="Thanks!"
+                      placeholder="Teşekkür Ederim"
                       value={shorthandResponse}
                       onChange={(e) => setShorthandResponse(e.target.value)}
                       onKeyPress={(e) => {
@@ -268,7 +266,7 @@ const Responder = () => {
                     type="submit"
                     className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
                   >
-                    Submit
+                    Gönder
                   </button>
                 </form>
               </div>
