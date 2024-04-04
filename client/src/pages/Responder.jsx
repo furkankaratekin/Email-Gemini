@@ -11,6 +11,7 @@ import { Link } from "react-router-dom";
 import Footer from "../components/Footer";
 import "../App.css";
 
+
 const Responder = () => {
   const [emailContent, setEmailContent] = useState(""); // State for email content
   const [shorthandResponse, setShorthandResponse] = useState(""); // State for shorthand response
@@ -95,6 +96,10 @@ const Responder = () => {
       );
       console.log("Generated Content:", response.data.generatedContent);
       setGeneratedContent(response.data.generatedContent); // Save the generated content to state
+
+        setListQuery((prevQueries) => [...prevQueries, response.data.query]);
+
+
       toast.success("Sorgu başarıyla gerçekleşti.");
     } catch (error) {
       console.error("Sorgu eklerken bir hata oluştu:", error);
@@ -139,7 +144,7 @@ const Responder = () => {
       const updatedListQuery = listQuery.filter(
         (query) => query._id !== queryId
       );
-      
+
       setListQuery(updatedListQuery);
     } catch (error) {
       console.error("Yorum silinirken bir hata oluştu:", error);
@@ -150,8 +155,6 @@ const Responder = () => {
       );
     }
   };
-  console.log(listQuery)
-  console.log(listQuery.map((item) => item._id));
 
   /*------------AXIOS İLE İŞLEMLER BİTİŞ-------------------------------------------------------------- */
   return (
@@ -174,15 +177,13 @@ const Responder = () => {
               >
                 <div className="flex justify-between items-start w-full">
                   <Link to={`/responder/${query._id}`}>
-                    
-                      <div className="flex flex-col">
-                        <div>{query.secondprompt || "Boş"}</div>
-                      </div>
-                   
+                    <div className="flex flex-col">
+                      <div>{query.secondprompt || "Boş"}</div>
+                    </div>
                   </Link>
 
                   <MdOutlineDelete
-                    className="text-2xl ml-3 text-gray-300 hover:text-red-500 self-start"
+                    className="text-2xl ml-3 mr-3 text-gray-300 hover:text-red-500 self-start"
                     onClick={() => handleDeleteQuery(query._id)} // Burada düzeltme yapıldı
                   />
                 </div>
@@ -276,9 +277,9 @@ const Responder = () => {
               <div className="bg-gray-900 text-white ">
                 <div className="py-4">
                   <img
-                    src="https://media.istockphoto.com/id/1300845620/tr/vekt%C3%B6r/kullan%C4%B1c%C4%B1-simgesi-d%C3%BCz-beyaz-arka-plan-%C3%BCzerinde-izole-kullan%C4%B1c%C4%B1-sembol%C3%BC-vekt%C3%B6r-ill%C3%BCstrasyonu.jpg?s=612x612&w=0&k=20&c=BapxTLg8R3jjWnvaSXeHqgtou_-FcyBKmAkUsgwQzxU="
+                    src="https://thumbs.dreamstime.com/z/user-profile-avatar-solid-black-line-icon-simple-vector-filled-flat-pictogram-isolated-white-background-134042540.jpg"
                     alt=""
-                    className="mx-auto h-10 w-10"
+                    className="mx-auto h-12 w-12 border-r rounded-full"
                   />
                   <h4 className="mt-2 text-center">Yazılan email</h4>
                   <div className="p-4 bg-gray-800 mx-auto my-2 rounded-lg max-w-md">
@@ -300,9 +301,9 @@ const Responder = () => {
                 <hr />
                 <div className="py-4 mt-10">
                   <img
-                    src="https://media.istockphoto.com/id/1452604857/tr/foto%C4%9Fraf/businessman-touching-the-brain-working-of-artificial-intelligence-automation-predictive.jpg?s=612x612&w=0&k=20&c=WTKgDne7V_AuiC5JjaUF-50fABjpvIU_bKo9EmhD7rM="
+                    src="https://st3.depositphotos.com/4376739/19472/v/450/depositphotos_194722654-stock-illustration-artificial-intelligence-logo-artificial-intelligence.jpg"
                     alt=""
-                    className="mx-auto h-14 w-14"
+                    className="mx-auto h-12 w-12 rounded-full"
                   />
                   <h4 className="mt-10 text-center">
                     Çıktı olarak alınan mail
