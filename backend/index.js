@@ -32,8 +32,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(allowCrossDomain);
 app.use(cookieParser());
 
-const uri =
-  "mongodb+srv://furkankaratekin:furkankaratekin@email-gemini.gm9suyp.mongodb.net/?retryWrites=true&w=majority&appName=Email-Gemini"; // .env dosyasında tanımladığınız bağlantı dizesi // Update with your MongoDB connection string // Use the environment variable
+const uri = process.env.MONGO_CONNECTION
 mongoose
   .connect(uri)
   .then(() => console.log("MongoDB connection successful"))

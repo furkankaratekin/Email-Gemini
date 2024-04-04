@@ -11,7 +11,6 @@ import { Link } from "react-router-dom";
 import Footer from "../components/Footer";
 import "../App.css";
 
-
 const Responder = () => {
   const [emailContent, setEmailContent] = useState(""); // State for email content
   const [shorthandResponse, setShorthandResponse] = useState(""); // State for shorthand response
@@ -97,15 +96,12 @@ const Responder = () => {
       console.log("Generated Content:", response.data.generatedContent);
       setGeneratedContent(response.data.generatedContent); // Save the generated content to state
 
-        setListQuery((prevQueries) => [...prevQueries, response.data.query]);
-
+      setListQuery((prevQueries) => [...prevQueries, response.data.query]);
 
       toast.success("Sorgu başarıyla gerçekleşti.");
     } catch (error) {
       console.error("Sorgu eklerken bir hata oluştu:", error);
-      toast.error(
-        `Lütfen giriş yapınız.`
-      );
+      toast.error(`Lütfen giriş yapınız.`);
     }
   };
 
@@ -306,7 +302,7 @@ const Responder = () => {
                   <h4 className="mt-10 text-center">
                     Çıktı olarak alınan mail
                   </h4>
-                  <div className="p-4 bg-gray-800 mx-auto my-2 rounded-lg max-w-md content-container">
+                  <div className="formatted-text p-4 bg-gray-800 mx-auto my-2 rounded-lg max-w-md content-container">
                     {generatedContent ? (
                       <p>{generatedContent}</p>
                     ) : (

@@ -5,7 +5,7 @@ import { errorHandler } from "../utils/error.js";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
 //Kullanıcı ID'ye göre sorgu oluştur
-const genAIKey = "AIzaSyBNaReRTooBxrDIvM1w1ovIzBZwHSMKp0g";
+const genAIKey = process.env.GEMINI_API;
 const genAI = new GoogleGenerativeAI(genAIKey);
 
 export const addQuery = async (req, res, next) => {

@@ -1,21 +1,20 @@
-import React,{useState,useEffect} from 'react'
-import axios from 'axios'
-import { Link } from 'react-router-dom'
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { Link } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css"; // Bu satırı genellikle ana componentinize eklemeniz daha iyi olur
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
-
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
+import '../App.css';
 
 const ListQuery = () => {
   const { id } = useParams(); // URL'den ID'yi almak için useParams hook'unu kullanın
   const { currentUser } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const [detailsQuery, setDetailsQuery] = useState(null);
-
 
   useEffect(() => {
     const fetchQueryDetails = async () => {
@@ -24,18 +23,19 @@ const ListQuery = () => {
           `http://localhost:5000/api/query/${id}`
         );
         setDetailsQuery(response.data);
-      } catch(error) {
-        console.error("Sorgular gelirken bir hata oluştu")
+      } catch (error) {
+        console.error("Sorgular gelirken bir hata oluştu");
       }
     };
     fetchQueryDetails();
-  },[id]); //id değiştiğinde useEffect tekrardan çalışır.
-   if (!detailsQuery) {
-    return <p>Yükleniyor...</p>;
-   }
-
-
-
+  }, [id]); //id değiştiğinde useEffect tekrardan çalışır.
+  if (!detailsQuery) {
+    return (
+      <div className="min-h-screen bg-gray-900">
+        <p className="text-white">Yükleniyor...</p>;
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-900">
@@ -62,7 +62,7 @@ const ListQuery = () => {
                   </div>
                 </div>
                 <div class="sm:w-2/3 sm:pl-8 sm:py-8 sm:border-l border-gray-600 sm:border-t-0 border-t mt-4 pt-4 sm:mt-0 text-center sm:text-left">
-                  <p class="leading-relaxed text-lg mb-4">
+                  <p class="leading-relaxed text-lg mb-4 formatted-text">
                     {detailsQuery.output}
                   </p>
                 </div>
@@ -74,13 +74,9 @@ const ListQuery = () => {
       <Footer className="mt-auto"></Footer>
     </div>
   );
+};
 
-   
-
-
-}
-
-export default ListQuery
+export default ListQuery;
 
 /* 
 Geçmiş sorguları burad
