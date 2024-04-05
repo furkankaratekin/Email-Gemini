@@ -10,7 +10,7 @@ const firebaseConfig = {
   projectId: "email-gemini",
   storageBucket: "email-gemini.appspot.com",
   messagingSenderId: "22703716788",
-  appId: "1:22703716788:web:75dd8d96d57f481fa2dae1",
+  appId: FIREBASE_APP_ID,
 };
 
 // Initialize Firebase
