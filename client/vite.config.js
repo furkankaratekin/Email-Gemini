@@ -8,7 +8,9 @@ export default defineConfig({
     proxy: {
       "/api": {
         target: "https://email-gemini-l-2-backend.vercel.app",
+        changeOrigin: true,
         secure: false,
+        ws: true,
       },
     },
   },
