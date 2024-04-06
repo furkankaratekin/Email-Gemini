@@ -5,12 +5,12 @@ import { initializeApp } from "firebase/app";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: process.env.FIREBASE_API_KEY,
+  apiKey: "sdfdsf",
   authDomain: "email-gemini.firebaseapp.com",
   projectId: "email-gemini",
   storageBucket: "email-gemini.appspot.com",
   messagingSenderId: "22703716788",
-  appId: FIREBASE_APP_ID,
+  appId: "asdad",
 };
 
 // Initialize Firebase
