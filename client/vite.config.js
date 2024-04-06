@@ -7,7 +7,7 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": {
-        target: "https://email-gemini-vercell-1.onrender.com",
+        target: "http://localhost:5000",
         secure: false,
       },
     },
