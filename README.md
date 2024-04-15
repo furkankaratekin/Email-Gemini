@@ -1,1 +1,1 @@
-İlk commitimde ne işin var çaqqal
+Kimseyi görmedim ben
