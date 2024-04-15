@@ -14,6 +14,7 @@ const generateBalloons = (num) => {
 
 const Home = () => {
    const [balloons, setBalloons] = useState([]);
+   //asdsddfd
 
    useEffect(() => {
      setBalloons(generateBalloons(20)); // Balon sayısını 20 olarak ayarlayalım
