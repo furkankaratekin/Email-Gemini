@@ -11,6 +11,7 @@ import OAuth from "../components/OAuth";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Navbar from "../components/Navbar";
+import axios from "axios";
 
 export default function SignIn() {
   const [formData, setFormData] = useState({});
@@ -26,7 +27,7 @@ export default function SignIn() {
     e.preventDefault();
     try {
       dispatch(signInStart());
-      const res = await fetch("/api/auth/signin", {
+      const res = await axios("/api/auth/signin", {
         method: "POST",
         headers: {
           "Accept": "application/json",
